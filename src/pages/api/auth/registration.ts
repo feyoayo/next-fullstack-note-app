@@ -2,7 +2,7 @@ import { DbConnectionService } from "@/services/db-connection.service";
 import { UserInterface } from "@/types/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from "next-connect";
-import { AuthenticateService } from "./_auth.service";
+import { AuthenticateService } from "../../../backend/services/auth.service";
 
 const registrationRoute = createRouter<NextApiRequest, NextApiResponse>();
 

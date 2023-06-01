@@ -1,4 +1,4 @@
-import { UserModel } from "@/models/user.model";
+import { UserModel } from "@/backend/models/user.model";
 import { UserInterface } from "@/types/auth";
 import { compare, genSalt, hash } from "bcryptjs";
 

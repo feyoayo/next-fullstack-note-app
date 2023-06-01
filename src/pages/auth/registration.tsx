@@ -1,10 +1,10 @@
+import InputField from "@/components/ui/InputField/Input-field.component";
+import { Spinner } from "@/components/ui/loaders";
+import useRegistration from "@/hooks/auth/useRegistration";
 import { UserInterface } from "@/types/auth";
-import { AxiosError } from "@/types/error";
-import { AuthenticateService } from "@/ui-services/authenticate.service";
-import { useEffect } from "react";
+
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
-import { toast } from "react-toastify";
+
 interface RegistrationField {
   email: string;
   password: string;
@@ -14,12 +14,16 @@ interface RegistrationField {
 }
 
 const RegistrationPage = () => {
-  const { register, handleSubmit } = useForm<RegistrationField>();
-  const { mutate, isLoading, error } = useMutation<any, AxiosError, any>(
-    (data: UserInterface) => AuthenticateService.registerUser(data)
-  );
-
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    watch,
+  } = useForm<RegistrationField>();
+  const { isLoading, registerUser } = useRegistration();
   const onSubmit = (data: UserInterface) => {
+    console.log(data);
     const { email, firstName, lastName, password } = data;
     const payload: UserInterface = {
       email,
@@ -27,106 +31,101 @@ const RegistrationPage = () => {
       lastName,
       password,
     };
-    mutate(payload);
+    registerUser(payload);
+    reset();
   };
-  useEffect(() => {
-    if (error) {
-      toast.error(
-        error?.response?.data?.error || "Something wrong while registration",
-        {
-          theme: "colored",
-        }
-      );
-    }
-  }, [error]);
+
   return (
     <div>
       <h2 className={"text-3xl"}>Registration</h2>
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={"flex flex-col items-center gap-2"}>
-            <div>
-              <label className={"inline-block w-[100px]"} htmlFor="email">
-                Email
-              </label>
-              <input
-                className={"border border-2 rounded-lg px-1"}
-                type="email"
-                {...register("email", { required: true })}
-              />
-            </div>
-            <div>
-              <label className={"inline-block w-[100px]"} htmlFor="firstName">
-                First name
-              </label>
-              <input
-                className={"border border-2 rounded-lg px-1"}
-                type="text"
-                {...register("firstName")}
-              />
-            </div>
-            <div>
-              <label className={"inline-block w-[100px]"} htmlFor="lastName">
-                Last name
-              </label>
-              <input
-                className={"border border-2 rounded-lg px-1"}
-                type="text"
-                {...register("lastName")}
-              />
-            </div>
-            <div>
-              <label className={"inline-block w-[100px]"} htmlFor="password">
-                Password
-              </label>
-              <input
-                className={"border border-2 rounded-lg px-1"}
-                type="password"
-                {...register("password")}
-              />
-            </div>
-            <div>
-              <label className={"inline-block w-[100px]"} htmlFor="password">
-                Confirm password
-              </label>
-              <input
-                className={"border border-2 rounded-lg px-1"}
-                type="password"
-                {...register("confirmPassword")}
-              />
-            </div>
+            <InputField
+              validationSchema={{
+                required: true,
+              }}
+              errors={errors}
+              required={true}
+              name={"email"}
+              label={"Email"}
+              register={register}
+              type={"email"}
+            />
+            <InputField
+              required={true}
+              name={"firstName"}
+              label={"First Name"}
+              type={"text"}
+              register={register}
+              errors={errors}
+              validationSchema={{
+                required: true,
+              }}
+            />
+            <InputField
+              name={"lastName"}
+              label={"Last Name"}
+              type={"text"}
+              register={register}
+              errors={errors}
+            />
+            <InputField
+              required={true}
+              name={"password"}
+              label={"Password"}
+              type={"password"}
+              register={register}
+              errors={errors}
+              validationSchema={{
+                required: {
+                  value: true,
+                  message: "Field is required",
+                },
+                minLength: {
+                  value: 8,
+                  message: "Min 8 chars needed",
+                },
+              }}
+            />
+            <InputField
+              required={true}
+              name={"confirmPassword"}
+              label={"Confirm password"}
+              type={"password"}
+              register={register}
+              errors={errors}
+              validationSchema={{
+                required: {
+                  value: true,
+                  message: "Field is required",
+                },
+                minLength: {
+                  value: 8,
+                  message: "Min 8 chars needed",
+                },
+                validate: (val: string) => {
+                  if (watch("password") != val) {
+                    return "Your passwords do not match";
+                  }
+                },
+              }}
+            />
             <div className={"mt-4"}>
               <button
-                className={"rounded-full py-1 px-3 bg-green-400"}
+                className={
+                  "flex text-sm justify-center text-center w-24 rounded-full py-1 px-3 bg-green-400"
+                }
                 type={"submit"}
               >
-                Register
+                {isLoading ? <Spinner /> : "Register"}
               </button>
             </div>
           </div>
         </form>
       </div>
-      <div>{isLoading && <span>Loading...</span>}</div>
     </div>
   );
 };
 
 export default RegistrationPage;
-
-// interface InputFieldInterface {
-//   label?: string;
-// }
-// const InputField = ({ label }: InputFieldInterface) => {
-//   return (
-//     <div>
-//       <label className={"inline-block w-[100px]"} htmlFor="password">
-//         {label}
-//       </label>
-//       <input
-//         className={"border border-2 rounded-lg px-1"}
-//         type="password"
-//         {...register("confirmPassword")}
-//       />
-//     </div>
-//   );
-// };
