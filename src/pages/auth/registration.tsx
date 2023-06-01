@@ -1,5 +1,5 @@
 import InputField from "@/components/ui/InputField/Input-field.component";
-import { Spinner } from "@/components/ui/loaders";
+import { OutlineButton } from "@/components/ui/buttons";
 import useRegistration from "@/hooks/auth/useRegistration";
 import { UserInterface } from "@/types/auth";
 
@@ -39,8 +39,11 @@ const RegistrationPage = () => {
     <div>
       <h2 className={"text-3xl"}>Registration</h2>
       <div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={"flex flex-col items-center gap-2"}>
+        <form
+          className={"flex justify-center"}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className={"flex flex-col items-center gap-2 w-[500px]"}>
             <InputField
               validationSchema={{
                 required: true,
@@ -112,14 +115,9 @@ const RegistrationPage = () => {
               }}
             />
             <div className={"mt-4"}>
-              <button
-                className={
-                  "flex text-sm justify-center text-center w-24 rounded-full py-1 px-3 bg-green-400"
-                }
-                type={"submit"}
-              >
-                {isLoading ? <Spinner /> : "Register"}
-              </button>
+              <OutlineButton type={"submit"} isLoading={isLoading}>
+                Registration
+              </OutlineButton>
             </div>
           </div>
         </form>

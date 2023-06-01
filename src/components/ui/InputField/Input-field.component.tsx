@@ -21,17 +21,25 @@ const InputField = ({
   errors,
 }: InputFieldInterface) => {
   return (
-    <div>
-      <label className={"inline-block w-[100px]"} htmlFor={name}>
+    <div className={"w-full"}>
+      <label
+        className={
+          "block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        }
+        htmlFor={name}
+      >
         {label}
         {required && "*"}
       </label>
       {/* @ts-ignore */}
       <input
         {...register(name, validationSchema)}
-        className={classNames("outline-none border border-2 rounded-lg px-1", {
-          ["border-red-500"]: errors && errors[name],
-        })}
+        className={classNames(
+          "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500px-1",
+          {
+            ["border-red-500"]: errors && errors[name],
+          }
+        )}
         type={type}
       />
     </div>
