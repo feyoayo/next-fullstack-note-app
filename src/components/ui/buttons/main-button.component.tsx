@@ -1,7 +1,7 @@
 import { Spinner } from "../loaders";
 
 export interface ButtonProps {
-  isLoading: boolean;
+  isLoading?: boolean;
   onClick?: () => void;
   children: string;
   type?: "button" | "submit" | "reset";

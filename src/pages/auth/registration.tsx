@@ -22,8 +22,7 @@ const RegistrationPage = () => {
     watch,
   } = useForm<RegistrationField>();
   const { isLoading, registerUser } = useRegistration();
-  const onSubmit = (data: UserInterface) => {
-    console.log(data);
+  const onSubmit = async (data: UserInterface) => {
     const { email, firstName, lastName, password } = data;
     const payload: UserInterface = {
       email,
@@ -31,8 +30,7 @@ const RegistrationPage = () => {
       lastName,
       password,
     };
-    registerUser(payload);
-    reset();
+    await registerUser(payload);
   };
 
   return (
@@ -43,7 +41,7 @@ const RegistrationPage = () => {
           className={"flex justify-center"}
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className={"flex flex-col items-center gap-2 w-[500px]"}>
+          <div className={"flex flex-col items-center gap-2 w-1/3"}>
             <InputField
               validationSchema={{
                 required: true,
