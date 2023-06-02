@@ -2,14 +2,20 @@ import { useForm } from "react-hook-form";
 import InputField from "@/components/ui/InputField/Input-field.component";
 import {OutlineButton} from "@/components/ui/buttons";
 import {useMutation} from "react-query";
-import {AuthenticateService} from "@/ui-services/authenticate.service";
+import {AuthenticateService} from "@/services/authenticate.service";
 import {UserAuthInterface} from "@/types/auth";
 import {toast} from "react-toastify";
+import {TOKEN_LOCALSTORAGE_KEY} from "@/utils/constants";
+import {useRouter} from "next/router";
+import AuthLayout from "@/components/layouts/auth.layout";
+import {ReactElement} from "react";
+import {NextPageWithLayout} from "@/types/util";
 
 
-const LoginPage = () => {
+const LoginPage: NextPageWithLayout = () => {
+    const router = useRouter();
   const {register, handleSubmit, formState: {errors}} = useForm<UserAuthInterface>();
-  const { isLoading, mutateAsync} = useMutation(
+  const { isLoading, mutateAsync, data: resData} = useMutation(
       (data: UserAuthInterface) => AuthenticateService.authenticateUser(data), {
           onError: (error) => {
               toast.error((error as any)?.response?.data?.error ?? "Login failed", {
@@ -19,12 +25,17 @@ const LoginPage = () => {
       })
   const onSubmit = async (data: UserAuthInterface) => {
       await mutateAsync(data)
+      if(resData) {
+          localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, resData.data.token)
+          await router.push('/')
+      }
   }
+
+
+
+
   return (
     <div>
-      <div>
-        <h1>Login</h1>
-      </div>
         <div className={'flex justify-center'}>
             <form className={'flex flex-col gap-2 w-1/3'} onSubmit={handleSubmit(onSubmit)}>
                 <InputField
@@ -52,4 +63,14 @@ const LoginPage = () => {
   );
 };
 
+
+LoginPage.getLayout = function getLayout(page: ReactElement) {
+    return (
+        <AuthLayout>
+            {page}
+        </AuthLayout>
+    )
+}
+
 export default LoginPage
+

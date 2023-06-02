@@ -18,6 +18,7 @@ const UserSchema = new Schema<UserInterface>({
     type: String,
   },
 });
+const model_t = model<UserInterface>("users", UserSchema)
 
 export const UserModel =
-  models.users || model<UserInterface>("users", UserSchema);
+  models.users as typeof model_t  || model<UserInterface>("users", UserSchema);

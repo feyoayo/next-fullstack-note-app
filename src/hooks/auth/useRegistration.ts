@@ -1,6 +1,6 @@
 import { UserInterface } from "@/types/auth";
 import { AxiosError } from "@/types/error";
-import { AuthenticateService } from "@/ui-services/authenticate.service";
+import { AuthenticateService } from "@/services/authenticate.service";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useMutation } from "react-query";

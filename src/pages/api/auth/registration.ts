@@ -1,8 +1,8 @@
-import { DbConnectionService } from "@/services/db-connection.service";
+import { DbConnectionService } from "@/backend/services/db-connection.service";
 import { UserInterface } from "@/types/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from "next-connect";
-import { AuthenticateService } from "../../../backend/services/auth.service";
+import { AuthenticateService } from "@/backend/services/auth.service";
 
 const registrationRoute = createRouter<NextApiRequest, NextApiResponse>();
 
@@ -17,7 +17,7 @@ registrationRoute.post(async (req, res) => {
     await connection.disconnectFromDb;
     res.status(200).json({ status: "Ok", message: "User created", user });
   } catch (e) {
-    const error = e as any;
+    const error = e as Error;
     console.log(e);
     res.status(400).json({ status: false, error: error.message });
   }

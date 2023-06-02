@@ -1,29 +1,18 @@
-import { UserModel } from "@/backend/models/user.model";
-import { UserInterface } from "@/types/auth";
-import { compare, genSalt, hash } from "bcryptjs";
+import {UserModel} from "@/backend/models/user.model";
+import {UserAuthInterface, UserInterface} from "@/types/auth";
+import jwt from 'jsonwebtoken'
+import {EncryptPassword} from "@/backend/services/encrypt-password.service";
 
 export class AuthenticateService {
-  private readonly saltAmount: number = 10;
-  private async hashPassword(password: string) {
-    try {
-      const salt = await genSalt(this.saltAmount);
-      let hashPassword: string = await hash(password, salt);
-      return hashPassword;
-    } catch (e) {
-      console.log(e);
-      return "";
-    }
-  }
-  private async comparePassword(
-    hash: string,
-    password: string
-  ): Promise<boolean> {
-    return compare(password, hash);
+  encryptPassword: EncryptPassword
+
+  constructor() {
+   this.encryptPassword = new EncryptPassword()
   }
 
+
   private async findUser(email: string) {
-    const user = await UserModel.findOne({ email });
-    return user;
+    return UserModel.findOne({email});
   }
 
   public async createUser(userData: UserInterface): Promise<UserInterface> {
@@ -32,8 +21,31 @@ export class AuthenticateService {
       throw new Error("User already exist");
     }
 
-    userData.password = await this.hashPassword(userData.password);
+    userData.password = await this.encryptPassword.hashPassword(userData.password);
     const user = new UserModel(userData).save();
     return user;
   }
+
+  public async authUser(userData: UserAuthInterface): Promise<any> {
+    const authCandidate = await this.findUser(userData.email);
+    if (!authCandidate) {
+      throw new Error("User not exist");
+    }
+
+    const isRightPassword = await this.encryptPassword.comparePassword(authCandidate.password, userData.password)
+
+    if(!isRightPassword) {
+      throw new Error('Login error')
+    }
+
+    const token = jwt.sign({
+      userId: authCandidate.id, email: authCandidate.email},
+        'SECRET1224', {expiresIn: '1d'}
+    )
+  return {
+      token
+  }
+  }
 }
+
+
