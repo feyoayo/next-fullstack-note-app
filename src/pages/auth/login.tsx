@@ -23,10 +23,17 @@ const LoginPage: NextPageWithLayout = () => {
       mutateAsync(data).then(r => localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, r.data.token))
   }
 
+  // useEffect(() => {
+  //     const el = document.querySelector("html")
+  //     if(el) {
+  //         el.className = 'dark'
+  //
+  //     }
+  // }, [])
+
 
   return (
-    <div>
-        <div className={'flex justify-center'}>
+        <div className={'flex h-full mt-[200px] justify-center'}>
             <form className={'flex flex-col gap-2 w-1/3'} onSubmit={handleSubmit(onSubmit)}>
                 <InputField
                     name={'email'}
@@ -35,6 +42,9 @@ const LoginPage: NextPageWithLayout = () => {
                     label={'Email'}
                     required
                     register={register}
+                    validationSchema={{
+                        required: true
+                    }}
                 />
                 <InputField
                     name={'password'}
@@ -43,13 +53,16 @@ const LoginPage: NextPageWithLayout = () => {
                     label={'Password'}
                     required
                     register={register}
+                    validationSchema={{
+                        required: true,
+
+                    }}
                 />
                 <div className={"mt-4"}>
                     <OutlineButton isLoading={isLoading} type={'submit'} >Login</OutlineButton>
                 </div>
             </form>
         </div>
-    </div>
   );
 };
 

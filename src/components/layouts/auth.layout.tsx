@@ -2,6 +2,7 @@ import React, {ReactElement, useEffect} from 'react';
 import {TOKEN_LOCALSTORAGE_KEY} from "@/utils/constants";
 import {useRouter} from "next/router";
 import {HOME_PAGE} from "@/utils/constants/routes";
+import AuthHeaderComponent from "@/components/ui/headers/auth-header.component";
 
 interface Props {
     children: ReactElement
@@ -16,10 +17,10 @@ const AuthLayout = ({children}: Props) => {
         }
     }, [router])
     return (
-        <>
-            <div>Auth Layout</div>
-            {children}
-        </>
+        <div className={'h-[100vh] dark:bg-black'}>
+            <AuthHeaderComponent/>
+                {children}
+        </div>
     );
 };
 
