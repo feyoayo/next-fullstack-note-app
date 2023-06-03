@@ -7,7 +7,7 @@ import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 
 export default function useRegistration() {
-  const { mutate, isLoading, isSuccess } = useMutation<any, AxiosError, any>(
+  const { mutateAsync, isLoading, isSuccess } = useMutation<any, AxiosError, any>(
     (data: UserInterface) => AuthenticateService.registerUser(data),
     {
       onSuccess: () => {
@@ -21,7 +21,7 @@ export default function useRegistration() {
 
   const router = useRouter();
   const registerUser = async (payload: UserInterface) => {
-    await mutate(payload);
+    await mutateAsync(payload);
   };
 
   useEffect(() => {

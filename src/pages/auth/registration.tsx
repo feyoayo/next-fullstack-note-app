@@ -4,6 +4,9 @@ import useRegistration from "@/hooks/auth/useRegistration";
 import { UserInterface } from "@/types/auth";
 
 import { useForm } from "react-hook-form";
+import {NextPageWithLayout} from "@/types/util";
+import {ReactElement} from "react";
+import AuthLayout from "@/components/layouts/auth.layout";
 
 interface RegistrationField {
   email: string;
@@ -13,7 +16,7 @@ interface RegistrationField {
   lastName: string;
 }
 
-const RegistrationPage = () => {
+const RegistrationPage: NextPageWithLayout = () => {
   const {
     register,
     handleSubmit,
@@ -122,5 +125,13 @@ const RegistrationPage = () => {
     </div>
   );
 };
+
+RegistrationPage.getLayout = function getLayout(page: ReactElement) {
+    return (
+        <AuthLayout>
+            {page}
+        </AuthLayout>
+    )
+}
 
 export default RegistrationPage;
