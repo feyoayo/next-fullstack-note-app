@@ -8,6 +8,6 @@ export class AuthenticateService {
     return await Axios.post("/auth/registration", body);
   }
   static async authenticateUser(body: UserAuthInterface) {
-    return await Axios.post<{token: string}>("/auth/authenticate", body);
+    return await Axios.post<{token: string}>("/auth/login", body);
   }
 }

@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     }, [router])
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastContainer pauseOnHover autoClose={5000} closeOnClick />
+      <ToastContainer hideProgressBar pauseOnHover autoClose={2000} closeOnClick />
         {getLayout(<Component {...pageProps} />)}
     </QueryClientProvider>
   );

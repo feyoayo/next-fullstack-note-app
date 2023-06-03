@@ -3,9 +3,9 @@ import { createRouter } from "next-connect";
 import {AuthenticateService} from "@/backend/services/auth.service";
 import {DbConnectionService} from "@/backend/services/db-connection.service";
 
-const authenticateRoute = createRouter<NextApiRequest, NextApiResponse>();
+const loginRouter = createRouter<NextApiRequest, NextApiResponse>();
 
-authenticateRoute.post(async (req, res) => {
+loginRouter.post(async (req, res) => {
   try {
     await new DbConnectionService().connectToDb()
     const service = new AuthenticateService()
@@ -19,4 +19,4 @@ authenticateRoute.post(async (req, res) => {
 
 });
 
-export default authenticateRoute.handler();
+export default loginRouter.handler();

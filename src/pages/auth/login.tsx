@@ -6,16 +6,14 @@ import {AuthenticateService} from "@/services/authenticate.service";
 import {UserAuthInterface} from "@/types/auth";
 import {toast} from "react-toastify";
 import {TOKEN_LOCALSTORAGE_KEY} from "@/utils/constants";
-import {useRouter} from "next/router";
 import AuthLayout from "@/components/layouts/auth.layout";
 import {ReactElement} from "react";
 import {NextPageWithLayout} from "@/types/util";
 
 
 const LoginPage: NextPageWithLayout = () => {
-    const router = useRouter();
   const {register, handleSubmit, formState: {errors}} = useForm<UserAuthInterface>();
-  const { isLoading, mutateAsync, data: resData} = useMutation(
+  const { isLoading, mutateAsync} = useMutation(
       (data: UserAuthInterface) => AuthenticateService.authenticateUser(data), {
           onError: (error) => {
               toast.error((error as any)?.response?.data?.error ?? "Login failed", {
@@ -24,14 +22,8 @@ const LoginPage: NextPageWithLayout = () => {
           },
       })
   const onSubmit = async (data: UserAuthInterface) => {
-      await mutateAsync(data)
-      if(resData) {
-          localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, resData.data.token)
-          await router.push('/')
-      }
+      mutateAsync(data).then(r => localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, r.data.token))
   }
-
-
 
 
   return (

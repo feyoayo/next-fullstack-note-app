@@ -1,5 +1,5 @@
 import { UserInterface } from "@/types/auth";
-import { Schema, model, models } from "mongoose";
+import {Schema, model, models, Model} from "mongoose";
 
 const UserSchema = new Schema<UserInterface>({
   email: {
@@ -18,7 +18,6 @@ const UserSchema = new Schema<UserInterface>({
     type: String,
   },
 });
-const model_t = model<UserInterface>("users", UserSchema)
 
-export const UserModel =
-  models.users as typeof model_t  || model<UserInterface>("users", UserSchema);
+export const UserModel: Model<UserInterface> =
+  models.users || model<UserInterface>("users", UserSchema);
