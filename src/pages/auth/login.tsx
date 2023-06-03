@@ -16,9 +16,7 @@ const LoginPage: NextPageWithLayout = () => {
   const { isLoading, mutateAsync} = useMutation(
       (data: UserAuthInterface) => AuthenticateService.authenticateUser(data), {
           onError: (error) => {
-              toast.error((error as any)?.response?.data?.error ?? "Login failed", {
-                  theme: "colored",
-              });
+              toast.error((error as any)?.response?.data?.error ?? "Login failed");
           },
       })
   const onSubmit = async (data: UserAuthInterface) => {

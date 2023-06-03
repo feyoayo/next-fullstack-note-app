@@ -17,7 +17,6 @@ const RegistrationPage = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
     watch,
   } = useForm<RegistrationField>();

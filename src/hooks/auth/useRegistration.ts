@@ -14,9 +14,7 @@ export default function useRegistration() {
         toast.success("User created successfully");
       },
       onError: (error) => {
-        toast.error(error?.response?.data?.error ?? "Registration failed", {
-          theme: "colored",
-        });
+        toast.error(error?.response?.data?.error ?? "Registration failed");
       },
     }
   );
