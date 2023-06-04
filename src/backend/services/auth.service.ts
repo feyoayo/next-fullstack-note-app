@@ -22,6 +22,7 @@ export class AuthenticateService {
     }
 
     userData.password = await this.encryptPassword.hashPassword(userData.password);
+    userData.role = 'USER';
     const user = new UserModel(userData).save();
     return user;
   }
