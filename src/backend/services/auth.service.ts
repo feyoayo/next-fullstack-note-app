@@ -11,7 +11,7 @@ export class AuthenticateService {
   }
 
 
-  private async findUser(email: string) {
+  public async findUser(email: string) {
     return UserModel.findOne({email});
   }
 

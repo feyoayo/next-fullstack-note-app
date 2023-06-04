@@ -9,6 +9,8 @@ import {TOKEN_LOCALSTORAGE_KEY} from "@/utils/constants";
 import AuthLayout from "@/components/layouts/auth.layout";
 import {ReactElement} from "react";
 import {NextPageWithLayout} from "@/types/util";
+import {signIn} from "next-auth/react";
+import {HOME_PAGE} from "@/utils/constants/routes";
 
 
 const LoginPage: NextPageWithLayout = () => {
@@ -20,7 +22,12 @@ const LoginPage: NextPageWithLayout = () => {
           },
       })
   const onSubmit = async (data: UserAuthInterface) => {
-      mutateAsync(data).then(r => localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, r.data.token))
+      // mutateAsync(data).then(r => localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, r.data.token))
+      await signIn('credentials', {
+          callbackUrl: HOME_PAGE,
+          email: data.email,
+          password: data.password
+      })
   }
 
   // useEffect(() => {
