@@ -17,6 +17,10 @@ const UserSchema = new Schema<UserInterface>({
   password: {
     type: String,
   },
+  role: {
+    default: 'USER',
+    type: String,
+  }
 });
 
 export const UserModel: Model<UserInterface> =

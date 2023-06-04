@@ -1,9 +1,12 @@
 import React from 'react';
 import Link from "next/link";
-import {ABOUT_PAGE, CONTACT_PAGE, HOME_PAGE} from "@/utils/constants/routes";
+import {ABOUT_PAGE, CONTACT_PAGE, HOME_PAGE, LOGIN_PAGE, REGISTRATION_PAGE} from "@/utils/constants/routes";
 import DarkModeSwitcher from "@/components/ui/dark-mode-switcher";
+import {useRouter} from "next/router";
 
 const AuthHeaderComponent = () => {
+    const router = useRouter()
+    const isRegistrationPage = router.pathname.includes(REGISTRATION_PAGE)
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -38,6 +41,18 @@ const AuthHeaderComponent = () => {
                             <Link href={CONTACT_PAGE}
                                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</Link>
                         </li>
+                        {!isRegistrationPage ? (
+                            <li>
+                                <Link href={REGISTRATION_PAGE}
+                                      className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sign Up</Link>
+                            </li>
+                        ) : (
+                            <li>
+                                <Link href={LOGIN_PAGE}
+                                      className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sign In</Link>
+                            </li>
+                        )}
+
                         <li>
                             <div className={'py-1 pl-2'}>
                                 <DarkModeSwitcher/>
