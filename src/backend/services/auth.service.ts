@@ -11,7 +11,7 @@ export class AuthenticateService {
   }
 
 
-  public async findUser(email: string, accountType: AccountTypes = 'credential') {
+  public async findUser(email: string, accountType?: AccountTypes) {
     return UserModel.findOne({email, accountType});
   }
 

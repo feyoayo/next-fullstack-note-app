@@ -4,11 +4,13 @@ import {DbConnectionService} from "@/backend/services/db-connection.service";
 import {AuthenticateService} from "@/backend/services/auth.service";
 import {EncryptPassword} from "@/backend/services/encrypt-password.service";
 import Google from "next-auth/providers/google";
+import {AccountTypes} from "@/types/auth";
 
 export const NextAuthSecret = 'SECRET_112233'
 
 export default NextAuth({
     secret: NextAuthSecret,
+
     providers: [
         Google({
             clientId: '280716270863-06fq468tdcv3j8plqdcco548h2vrir0t.apps.googleusercontent.com',
@@ -58,9 +60,13 @@ export default NextAuth({
             }
             return true
                 },
-        async jwt({token, user}) {
+        async jwt({token, user, account}) {
+            await new DbConnectionService().connectToDb()
+            const authService = new AuthenticateService()
             if(user) {
+                const userFromDB = await authService.findUser(user.email!, account?.provider! as AccountTypes)
                 token.user = {
+                    userId: userFromDB?.id,
                     email: user.email,
                     // @ts-ignore
                     role: user.role ?? 'USER'
