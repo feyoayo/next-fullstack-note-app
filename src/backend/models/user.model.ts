@@ -29,4 +29,4 @@ const UserSchema = new Schema<UserInterface>({
 })
 
 export const UserModel: Model<UserInterface> =
-  models?.users_test || model<UserInterface>("users_test", UserSchema);
+  models?.users || model<UserInterface>("users", UserSchema);
