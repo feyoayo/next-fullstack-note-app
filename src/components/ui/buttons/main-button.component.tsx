@@ -1,9 +1,11 @@
 import { Spinner } from "../loaders";
+import {ReactElement} from "react";
 
 export interface ButtonProps {
+    className?: string;
   isLoading?: boolean;
   onClick?: () => void;
-  children: string;
+  children: string | ReactElement;
   type?: "button" | "submit" | "reset";
 }
 const MainButton = ({ isLoading, onClick, type, children }: ButtonProps) => {

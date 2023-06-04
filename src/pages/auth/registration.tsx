@@ -24,13 +24,13 @@ const RegistrationPage: NextPageWithLayout = () => {
     watch,
   } = useForm<RegistrationField>();
   const { isLoading, registerUser } = useRegistration();
-  const onSubmit = async (data: UserInterface) => {
+  const onSubmit = async (data: Omit<UserInterface, 'accountType'>) => {
     const { email, firstName, lastName, password } = data;
     const payload: UserInterface = {
       email,
       firstName,
       lastName,
-      password,
+      password, accountType: 'credential'
     };
     await registerUser(payload);
   };

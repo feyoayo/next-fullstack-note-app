@@ -1,6 +1,7 @@
 import { UserInterface } from "@/types/auth";
 import {Schema, model, models, Model} from "mongoose";
 
+
 const UserSchema = new Schema<UserInterface>({
   email: {
     type: String,
@@ -20,8 +21,12 @@ const UserSchema = new Schema<UserInterface>({
   role: {
     default: 'USER',
     type: String,
-  }
-});
+  },
+  accountType: {
+   required: true,
+    type: String
+  },
+})
 
 export const UserModel: Model<UserInterface> =
-  models.users || model<UserInterface>("users", UserSchema);
+  models?.users_test || model<UserInterface>("users_test", UserSchema);

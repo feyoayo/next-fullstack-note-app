@@ -1,5 +1,5 @@
 import {UserModel} from "@/backend/models/user.model";
-import {UserAuthInterface, UserInterface} from "@/types/auth";
+import {AccountTypes, UserAuthInterface, UserInterface} from "@/types/auth";
 import jwt from 'jsonwebtoken'
 import {EncryptPassword} from "@/backend/services/encrypt-password.service";
 
@@ -11,8 +11,8 @@ export class AuthenticateService {
   }
 
 
-  public async findUser(email: string) {
-    return UserModel.findOne({email});
+  public async findUser(email: string, accountType: AccountTypes = 'credential') {
+    return UserModel.findOne({email, accountType});
   }
 
   public async createUser(userData: UserInterface): Promise<UserInterface> {
@@ -24,6 +24,18 @@ export class AuthenticateService {
     userData.password = await this.encryptPassword.hashPassword(userData.password);
     const user = new UserModel(userData).save();
     return user;
+  }
+  public async createGoogleUser(profile: any) {
+    const isUserExist = await this.findUser(profile!.email!, 'google')
+    if(!isUserExist && profile) {
+      const payload: UserInterface = {
+        firstName: profile.given_name, lastName: profile.family_name,
+        email: profile.email!,
+        accountType: 'google',
+        password: ''
+      }
+      await this.createUser(payload)
+    }
   }
 
   public async authUser(userData: UserAuthInterface): Promise<any> {
