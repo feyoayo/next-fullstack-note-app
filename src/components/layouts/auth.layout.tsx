@@ -1,13 +1,12 @@
-import React, {ReactElement, useEffect} from 'react';
+import React, { useEffect} from 'react';
 import {TOKEN_LOCALSTORAGE_KEY} from "@/utils/constants";
 import {useRouter} from "next/router";
 import {HOME_PAGE} from "@/utils/constants/routes";
 import AuthHeaderComponent from "@/components/ui/headers/auth-header.component";
+import {LayoutProps} from "@/types/util";
 
-interface Props {
-    children: ReactElement
-}
-const AuthLayout = ({children}: Props) => {
+
+const AuthLayout = ({children}: LayoutProps) => {
     const router = useRouter()
 
     useEffect(() => {

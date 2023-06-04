@@ -1,37 +1,33 @@
 import { useForm } from "react-hook-form";
 import InputField from "@/components/ui/InputField/Input-field.component";
-import {OutlineButton} from "@/components/ui/buttons";
+import {GoogleButton, OutlineButton} from "@/components/ui/buttons";
 import {useMutation} from "react-query";
 import {AuthenticateService} from "@/services/authenticate.service";
 import {UserAuthInterface} from "@/types/auth";
 import {toast} from "react-toastify";
-import {TOKEN_LOCALSTORAGE_KEY} from "@/utils/constants";
 import AuthLayout from "@/components/layouts/auth.layout";
 import {ReactElement} from "react";
 import {NextPageWithLayout} from "@/types/util";
+import {signIn} from "next-auth/react";
+import {HOME_PAGE} from "@/utils/constants/routes";
 
 
 const LoginPage: NextPageWithLayout = () => {
   const {register, handleSubmit, formState: {errors}} = useForm<UserAuthInterface>();
-  const { isLoading, mutateAsync} = useMutation(
+  const { isLoading} = useMutation(
       (data: UserAuthInterface) => AuthenticateService.authenticateUser(data), {
           onError: (error) => {
               toast.error((error as any)?.response?.data?.error ?? "Login failed");
           },
       })
   const onSubmit = async (data: UserAuthInterface) => {
-      mutateAsync(data).then(r => localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, r.data.token))
+      // mutateAsync(data).then(r => localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, r.data.token))
+      await signIn('credentials', {
+          callbackUrl: HOME_PAGE,
+          email: data.email,
+          password: data.password
+      })
   }
-
-  // useEffect(() => {
-  //     const el = document.querySelector("html")
-  //     if(el) {
-  //         el.className = 'dark'
-  //
-  //     }
-  // }, [])
-
-
   return (
         <div className={'flex h-full mt-[200px] justify-center'}>
             <form className={'flex flex-col gap-2 w-1/3'} onSubmit={handleSubmit(onSubmit)}>
@@ -58,8 +54,19 @@ const LoginPage: NextPageWithLayout = () => {
 
                     }}
                 />
-                <div className={"mt-4"}>
-                    <OutlineButton isLoading={isLoading} type={'submit'} >Login</OutlineButton>
+                <div className={"mt-4 flex flex-col"}>
+                    <div>
+                        <OutlineButton
+                            className={'w-full'}
+                            isLoading={isLoading} type={'submit'}>
+                            <div
+                            >
+                                Login
+                            </div>
+                        </OutlineButton>
+
+                    </div>
+                    <GoogleButton/>
                 </div>
             </form>
         </div>
@@ -76,4 +83,5 @@ LoginPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export default LoginPage
+
 

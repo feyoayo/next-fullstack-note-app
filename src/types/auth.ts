@@ -1,12 +1,13 @@
 
 export type ROLES = "ADMIN" | "USER"
-
+export type AccountTypes = 'credential' | 'google'
 export interface UserInterface {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
-  role?: ROLES
+  role?: ROLES,
+  accountType:AccountTypes
 }
 
 export interface UserAuthInterface {
