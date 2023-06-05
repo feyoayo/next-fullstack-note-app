@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { HTMLInputTypeAttribute } from "react";
 import { FieldErrors, RegisterOptions, UseFormRegister } from "react-hook-form";
+import Label from "@/components/ui/label";
 
 interface InputFieldInterface {
   label?: string;
@@ -22,15 +23,7 @@ const InputField = ({
 }: InputFieldInterface) => {
   return (
     <div className={"w-full"}>
-      <label
-        className={
-          "block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        }
-        htmlFor={name}
-      >
-        {label}
-        {required && "*"}
-      </label>
+      {label && <Label htmlFor={name} label={label} required={required} />}
       {/* @ts-ignore */}
       <input
         {...register(name, validationSchema)}
