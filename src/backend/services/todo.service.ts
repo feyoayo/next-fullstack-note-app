@@ -15,4 +15,8 @@ export class TodoService {
     await this.dbService.connectToDb();
     return new TodoModel(data).save();
   }
+
+  async getTodos(userId: string): Promise<TodoModelInterface[]> {
+    return TodoModel.find({ userId });
+  }
 }

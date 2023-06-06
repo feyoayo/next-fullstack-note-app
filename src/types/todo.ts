@@ -14,4 +14,5 @@ export interface TodoModelInterface extends CreateTodoInterface {
   createdAt: number;
   updatedAt?: number;
   completed?: boolean;
+  _id?: string;
 }

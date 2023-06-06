@@ -1,11 +1,12 @@
 import Axios from "@/config/axios-config";
-import { CreateTodoInterface } from "@/types/todo";
+import { CreateTodoInterface, TodoModelInterface } from "@/types/todo";
 
 export class TodoService {
   static async createTodo(body: CreateTodoInterface) {
     return await Axios.post("/todos", body);
   }
   static async getTodosList() {
-    return await Axios.get("/todos");
+    const data = await Axios.get<{ data: TodoModelInterface[] }>("/todos");
+    return data.data;
   }
 }

@@ -4,10 +4,8 @@ import InputField from "@/components/ui/InputField/Input-field.component";
 import { OutlineButton } from "@/components/ui/buttons";
 import { useState } from "react";
 import { ChipComponent, InputComponent, Label } from "@/components/ui";
-import { useMutation } from "react-query";
-import { TodoService } from "@/services/todo.service";
 import { CreateTodoInterface } from "@/types/todo";
-import { toast } from "react-toastify";
+import useTodos from "@/hooks/useTodos";
 
 interface TodoModalProps {
   onClose: () => void;
@@ -27,18 +25,7 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
   });
   const [tagValue, setTagValue] = useState("");
 
-  const { mutateAsync, isLoading } = useMutation(
-    (data: CreateTodoInterface) => TodoService.createTodo(data),
-    {
-      onSuccess: () => {
-        toast.success("Todo created successfully");
-      },
-      onError: (error) => {
-        toast.error("Todo creation failed");
-      },
-    }
-  );
-
+  const { isCreationLoading, createTodo } = useTodos();
   const onAddTag = () => {
     setValue("tags", watch("tags").concat(tagValue));
     setTagValue("");
@@ -50,7 +37,7 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
   };
 
   const onSubmit = async (data: CreateTodoInterface) => {
-    await mutateAsync(data);
+    await createTodo(data);
     reset();
   };
   return (
@@ -123,7 +110,7 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
                 ))}
               </div>
               <div className={"flex justify-center"}>
-                <OutlineButton isLoading={isLoading} type={"submit"}>
+                <OutlineButton isLoading={isCreationLoading} type={"submit"}>
                   Create
                 </OutlineButton>
               </div>

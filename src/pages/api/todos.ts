@@ -11,4 +11,9 @@ todosRoute.post(async (req, res) => {
   await controller.createTodo(req, res);
 });
 
+todosRoute.get(async (req, res) => {
+  const controller = new TodoController();
+  await controller.getTodos(req, res);
+});
+
 export default todosRoute.handler();
