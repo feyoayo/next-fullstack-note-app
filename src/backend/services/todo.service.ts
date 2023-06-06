@@ -1,7 +1,6 @@
 import { DbConnectionService } from "@/backend/services/db-connection.service";
-import { CreateTodoInterface } from "@/backend/types/todo/create-todo.interface";
 import { TodoModel } from "@/backend/models/todo.model";
-import { Model } from "mongoose";
+import { CreateTodoPayloadInterface, TodoModelInterface } from "@/types/todo";
 
 export class TodoService {
   dbService: DbConnectionService;
@@ -10,7 +9,9 @@ export class TodoService {
     this.dbService = new DbConnectionService();
   }
 
-  async createTodo(data: CreateTodoInterface): Promise<TodoModel> {
+  async createTodo(
+    data: CreateTodoPayloadInterface
+  ): Promise<TodoModelInterface> {
     await this.dbService.connectToDb();
     return new TodoModel(data).save();
   }

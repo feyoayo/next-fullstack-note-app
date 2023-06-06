@@ -1,16 +1,13 @@
 import CloseIconSvg from "@/components/svg/closeIcon.svg";
 import { useForm } from "react-hook-form";
 import InputField from "@/components/ui/InputField/Input-field.component";
-import { Button } from "react-query/types/devtools/styledComponents";
 import { OutlineButton } from "@/components/ui/buttons";
 import { useState } from "react";
 import { ChipComponent, InputComponent, Label } from "@/components/ui";
-
-interface Form {
-  todo: string;
-  tags: string[];
-  date: Date;
-}
+import { useMutation } from "react-query";
+import { TodoService } from "@/services/todo.service";
+import { CreateTodoInterface } from "@/types/todo";
+import { toast } from "react-toastify";
 
 interface TodoModalProps {
   onClose: () => void;
@@ -22,12 +19,26 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
     formState: { errors },
     setValue,
     handleSubmit,
-  } = useForm<Form>({
+    reset,
+  } = useForm<CreateTodoInterface>({
     defaultValues: {
       tags: [],
     },
   });
   const [tagValue, setTagValue] = useState("");
+
+  const { mutateAsync, isLoading } = useMutation(
+    (data: CreateTodoInterface) => TodoService.createTodo(data),
+    {
+      onSuccess: () => {
+        toast.success("Todo created successfully");
+      },
+      onError: (error) => {
+        toast.error("Todo creation failed");
+      },
+    }
+  );
+
   const onAddTag = () => {
     setValue("tags", watch("tags").concat(tagValue));
     setTagValue("");
@@ -38,7 +49,10 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
     setValue("tags", newTags);
   };
 
-  const onSubmit = (data: Form) => {};
+  const onSubmit = async (data: CreateTodoInterface) => {
+    await mutateAsync(data);
+    reset();
+  };
   return (
     <div
       id="create_modal"
@@ -64,7 +78,7 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <InputField
-                name={"todo"}
+                name={"title"}
                 type={"text"}
                 required
                 register={register}
@@ -94,7 +108,9 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
                   />
                 </div>
 
-                <OutlineButton onClick={() => onAddTag()}>Add</OutlineButton>
+                <OutlineButton type={"button"} onClick={() => onAddTag()}>
+                  Add
+                </OutlineButton>
               </div>
 
               <div className="px-2 pt-2 pb-11 mb-3 flex flex-wrap rounded-lg bg-purple-200 dark:bg-gray-400">
@@ -107,7 +123,9 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
                 ))}
               </div>
               <div className={"flex justify-center"}>
-                <OutlineButton type={"submit"}>Create</OutlineButton>
+                <OutlineButton isLoading={isLoading} type={"submit"}>
+                  Create
+                </OutlineButton>
               </div>
             </form>
           </div>

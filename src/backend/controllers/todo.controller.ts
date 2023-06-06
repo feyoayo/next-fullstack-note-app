@@ -1,10 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { CreateTodoInterface } from "@/backend/types/todo/create-todo.interface";
-import { DbConnectionService } from "@/backend/services/db-connection.service";
 import { NextApiRequest, NextApiResponse } from "next";
-import { TodoModel } from "@/backend/models/todo.model";
 import { BaseController } from "@/backend/common/base-controller";
 import { TodoService } from "@/backend/services/todo.service";
+import { CreateTodoInterface } from "@/types/todo";
 
 export class TodoController extends BaseController {
   todoService: TodoService;
@@ -15,12 +12,16 @@ export class TodoController extends BaseController {
   async createTodo(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     try {
       const body = req.body as unknown as CreateTodoInterface;
-
       if (!body) {
         throw new Error("Fields required");
       }
-
-      const todo = this.todoService.createTodo(body);
+      const todo = await this.todoService.createTodo({
+        ...body,
+        userId: req.user.userId,
+      });
+      if (!todo) {
+        throw new Error("Todo not created");
+      }
       this.created(res, todo);
     } catch (e) {
       this.errorMessage(e, res);
