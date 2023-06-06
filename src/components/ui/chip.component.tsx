@@ -1,12 +1,20 @@
 import React from "react";
+import classNames from "classnames";
 
 interface ChipComponentProps {
   label: string;
   onDelete?: () => void;
+  onClick?: () => void;
 }
-const ChipComponent = ({ label, onDelete }: ChipComponentProps) => {
+const ChipComponent = ({ label, onDelete, onClick }: ChipComponentProps) => {
   return (
-    <div className="flex justify-center items-center m-1 font-medium py-1 px-2  rounded-full text-white bg-purple-500 border border-purple-700 ">
+    <div
+      onClick={onClick}
+      className={classNames(
+        "flex justify-center items-center m-1 font-medium py-1 px-2  rounded-full text-white bg-purple-500 border border-purple-700 ",
+        onClick && "cursor-pointer"
+      )}
+    >
       <div className="text-xs font-normal leading-none max-w-full flex-initial">
         {label}
       </div>

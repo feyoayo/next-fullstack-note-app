@@ -3,15 +3,17 @@ import { CreateTodoInterface } from "@/types/todo";
 import { TodoService } from "@/services/todo.service";
 import { toast } from "react-toastify";
 
-export default function useTodos() {
+export default function useTodos({ tag }: { tag?: string }) {
   const queryClient = useQueryClient();
-  const { data: response, isLoading: isTodoListLoading } = useQuery({
-    queryFn: TodoService.getTodosList,
-    queryKey: ["todoData"],
-    onError: (err) => {
-      toast.error("Todo list getting error");
-    },
-  });
+  const { data: response, isLoading: isTodoListLoading } = useQuery(
+    ["todoData", tag],
+    {
+      queryFn: () => TodoService.getTodosList(tag),
+      onError: (err) => {
+        toast.error("Todo list getting error");
+      },
+    }
+  );
   const { mutateAsync, isLoading: isCreationLoading } = useMutation(
     (data: CreateTodoInterface) => TodoService.createTodo(data),
     {

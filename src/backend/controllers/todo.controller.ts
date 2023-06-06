@@ -35,7 +35,8 @@ export class TodoController extends BaseController {
   }
   async getTodos(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     try {
-      const todoList = await this.todoService.getTodos(req.user.userId);
+      const tag = String(req.query.tag);
+      const todoList = await this.todoService.getTodos(req.user.userId, tag);
       this.ok(res, todoList);
     } catch (e) {
       this.errorMessage(e, res);

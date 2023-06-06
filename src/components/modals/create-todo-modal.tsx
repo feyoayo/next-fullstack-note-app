@@ -25,7 +25,7 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
   });
   const [tagValue, setTagValue] = useState("");
 
-  const { isCreationLoading, createTodo } = useTodos();
+  const { isCreationLoading, createTodo } = useTodos({});
   const onAddTag = () => {
     setValue("tags", watch("tags").concat(tagValue));
     setTagValue("");

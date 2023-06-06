@@ -16,7 +16,9 @@ export class TodoService {
     return new TodoModel(data).save();
   }
 
-  async getTodos(userId: string): Promise<TodoModelInterface[]> {
+  async getTodos(userId: string, tag: string): Promise<TodoModelInterface[]> {
+    console.log(tag);
+    if (tag) return TodoModel.find({ userId, tags: { $in: [tag] } });
     return TodoModel.find({ userId });
   }
 }
