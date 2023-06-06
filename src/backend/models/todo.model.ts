@@ -1,7 +1,7 @@
-import { model, models, Schema } from "mongoose";
+import { Model, model, models, Schema } from "mongoose";
 import { CollectionNameEnum } from "@/backend/enums/collection-name.enum";
 
-interface TodoModel {
+export interface TodoModel {
   title: string;
   userId: Schema.Types.ObjectId;
   createdAt: number;
@@ -15,9 +15,6 @@ const todoSchema = new Schema<TodoModel>({
   title: {
     required: true,
     type: String,
-  },
-  completed: {
-    default: false,
   },
   userId: {
     ref: CollectionNameEnum.users,
@@ -35,6 +32,9 @@ const todoSchema = new Schema<TodoModel>({
   updatedAt: {
     type: Date,
   },
+  completed: {
+    default: false,
+  },
 });
 
 todoSchema.pre("save", function (next) {
@@ -42,5 +42,5 @@ todoSchema.pre("save", function (next) {
   next();
 });
 
-export const TodoModel =
-  models?.todos || model(CollectionNameEnum.todos, todoSchema);
+export const TodoModel = (models?.todos ||
+  model(CollectionNameEnum.todos, todoSchema)) as Model<TodoModel>;
