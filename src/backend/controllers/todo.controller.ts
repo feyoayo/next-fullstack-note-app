@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { BaseController } from "@/backend/common/base-controller";
 import { TodoService } from "@/backend/services/todo.service";
-import { CreateTodoInterface } from "@/types/todo";
+import { CreateTaskInterface } from "@/types/todo";
 
 export class TodoController extends BaseController {
   todoService: TodoService;
@@ -11,7 +11,7 @@ export class TodoController extends BaseController {
   }
   async createTodo(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     try {
-      const body = req.body as unknown as CreateTodoInterface;
+      const body = req.body as unknown as CreateTaskInterface;
       if (!body) {
         throw new Error("Fields required");
       }

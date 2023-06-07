@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 import { DbConnectionService } from "@/backend/services/db-connection.service";
 import { GetServerSideProps } from "next";
 import { TodoModel } from "@/backend/models/todo.model";
-import { TodoModelInterface } from "@/types/todo";
+import { TaskModelInterface } from "@/types/todo";
 
 interface Props {
-  todo: TodoModelInterface;
+  task: TaskModelInterface;
 }
-const TodoPage = ({ todo }: Props) => {
+const TodoPage = ({ task }: Props) => {
   const router = useRouter();
   return (
     <div>
@@ -19,12 +19,11 @@ const TodoPage = ({ todo }: Props) => {
       >
         {"<--"} Back
       </div>
-      <div>Title: {todo.title}</div>
-      <div>Completed: {String(todo.completed)}</div>
-      <div>Created: {String(new Date(todo.createdAt))}</div>
+      <div>Title: {task.title}</div>
+      <div>Created: {String(new Date(task.createdAt))}</div>
       <div>
         Tags:{" "}
-        {todo.tags.map((el, index) => (
+        {task.tags.map((el, index) => (
           <span key={index}>{el + " "} </span>
         ))}
       </div>
@@ -44,7 +43,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const item = await TodoModel.findById(id);
   return {
     props: {
-      todo: JSON.parse(JSON.stringify(item)),
+      task: JSON.parse(JSON.stringify(item)),
     },
   };
 };

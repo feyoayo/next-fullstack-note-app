@@ -2,10 +2,10 @@ import React, { useRef } from "react";
 import { useRouter } from "next/router";
 import { useDrag, useDrop } from "react-dnd";
 import classNames from "classnames";
-import { TodoModelInterface } from "@/types/todo";
+import { TaskModelInterface } from "@/types/todo";
 
 interface Props {
-  el: TodoModelInterface;
+  el: TaskModelInterface;
   index: number;
   moveItem: any;
 }

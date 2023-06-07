@@ -1,18 +1,18 @@
 import { Schema } from "mongoose";
 
-export interface CreateTodoInterface {
+export interface CreateTaskInterface {
   title: string;
   when?: Date;
   tags: string[];
 }
 
-export interface CreateTodoPayloadInterface extends CreateTodoInterface {
+export interface CreateTaskPayloadInterface extends CreateTaskInterface {
   userId: string;
 }
-export interface TodoModelInterface extends CreateTodoInterface {
+export interface TaskModelInterface extends CreateTaskInterface {
   userId: Schema.Types.ObjectId;
   createdAt: number;
   updatedAt?: number;
-  completed?: boolean;
+  column?: string;
   _id?: string;
 }

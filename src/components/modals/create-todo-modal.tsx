@@ -4,8 +4,8 @@ import InputField from "@/components/ui/InputField/Input-field.component";
 import { OutlineButton } from "@/components/ui/buttons";
 import { useState } from "react";
 import { ChipComponent, InputComponent, Label } from "@/components/ui";
-import { CreateTodoInterface } from "@/types/todo";
-import useTodos from "@/hooks/useTodos";
+import { CreateTaskInterface } from "@/types/todo";
+import useTasks from "@/hooks/useTasks";
 
 interface TodoModalProps {
   onClose: () => void;
@@ -18,14 +18,14 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
     setValue,
     handleSubmit,
     reset,
-  } = useForm<CreateTodoInterface>({
+  } = useForm<CreateTaskInterface>({
     defaultValues: {
       tags: [],
     },
   });
   const [tagValue, setTagValue] = useState("");
 
-  const { isCreationLoading, createTodo } = useTodos({});
+  const { isCreationLoading, createTask } = useTasks({});
   const onAddTag = () => {
     setValue("tags", watch("tags").concat(tagValue));
     setTagValue("");
@@ -36,8 +36,8 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
     setValue("tags", newTags);
   };
 
-  const onSubmit = async (data: CreateTodoInterface) => {
-    await createTodo(data);
+  const onSubmit = async (data: CreateTaskInterface) => {
+    await createTask(data);
     reset();
   };
   return (

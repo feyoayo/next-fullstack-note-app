@@ -1,23 +1,25 @@
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { OutlineButton } from "@/components/ui/buttons";
 import CreateTodoModal from "@/components/modals/create-todo-modal";
 import MainLayout from "@/components/layouts/main.layout";
 import { useRouter } from "next/router";
-import useTodos from "@/hooks/useTodos";
 import { GetServerSideProps } from "next";
 import { DbConnectionService } from "@/backend/services/db-connection.service";
 import { TodoModel } from "@/backend/models/todo.model";
 import { ChipComponent } from "@/components/ui";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { TodoModelInterface } from "@/types/todo";
-import classNames from "classnames";
-import update from "immutability-helper";
 import TaskContainerComponent from "@/components/task-page/tasks-container/task-container.component";
+import { TaskColumnsModel } from "@/backend/models/task-columns.model";
+import { getToken } from "next-auth/jwt";
+import { NextAuthSecret } from "@/pages/api/auth/[...nextauth]";
+import { ObjectId } from "bson";
+
 interface Props {
   tags: string[];
+  columns: string[];
 }
-const TodosPage = ({ tags }: Props) => {
+const TodosPage = ({ tags, columns }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const [selectedTag, setSelectedTag] = useState("");
@@ -57,7 +59,7 @@ const TodosPage = ({ tags }: Props) => {
         </div>
         <div>
           <OutlineButton onClick={() => setShowModal(true)}>
-            {"Create todo"}
+            {"Create task"}
           </OutlineButton>
           {showModal && <CreateTodoModal onClose={() => setShowModal(false)} />}
         </div>
@@ -76,17 +78,24 @@ TodosPage.getLayout = function getLayout(page: ReactElement) {
 
 export default TodosPage;
 
-export const getServerSideProps: GetServerSideProps<{}> = async () => {
+export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const dbService = new DbConnectionService();
+  const token = await getToken({ req: context.req, secret: NextAuthSecret });
+  const userId = token?.user.userId;
   await dbService.connectToDb();
   const result = await TodoModel.aggregate([
+    { $match: { userId: new ObjectId(userId) } },
     { $unwind: "$tags" },
     { $group: { _id: null, tags: { $addToSet: "$tags" } } },
     { $project: { _id: 0, tags: 1 } },
   ]);
+  const columns = await TaskColumnsModel.findOne({
+    userId,
+  });
   return {
     props: {
-      tags: result[0].tags,
+      tags: result[0]?.tags ?? [],
+      columns: columns?.taskColumns ?? [],
     },
   };
 };

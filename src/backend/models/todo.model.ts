@@ -1,8 +1,8 @@
 import { Model, model, models, Schema } from "mongoose";
 import { CollectionNameEnum } from "@/backend/enums/collection-name.enum";
-import { TodoModelInterface } from "@/types/todo";
+import { TaskModelInterface } from "@/types/todo";
 
-const todoSchema = new Schema<TodoModelInterface>({
+const todoSchema = new Schema<TaskModelInterface>({
   title: {
     required: true,
     type: String,
@@ -23,9 +23,9 @@ const todoSchema = new Schema<TodoModelInterface>({
   updatedAt: {
     type: Date,
   },
-  completed: {
-    type: Boolean,
-    default: "false",
+  column: {
+    type: String,
+    default: "Backlog",
   },
 });
 
@@ -35,4 +35,4 @@ todoSchema.pre("save", function (next) {
 });
 
 export const TodoModel = (models?.todos ||
-  model(CollectionNameEnum.todos, todoSchema)) as Model<TodoModelInterface>;
+  model(CollectionNameEnum.todos, todoSchema)) as Model<TaskModelInterface>;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useTodos from "@/hooks/useTodos";
+import useTasks from "@/hooks/useTasks";
 import update from "immutability-helper";
 import TaskListItemComponent from "@/components/task-page/tasks-container/task-list-item.component";
 
@@ -7,10 +7,10 @@ interface Props {
   selectedTag: string;
 }
 const TaskContainerComponent = ({ selectedTag }: Props) => {
-  const { todos } = useTodos({
+  const { tasks } = useTasks({
     tag: selectedTag,
   });
-  const [taskState, setTaskState] = useState(todos);
+  const [taskState, setTaskState] = useState(tasks);
 
   const moveItem = (dragIndex: number, hoverIndex: number) => {
     const dragTask = taskState[dragIndex];
@@ -27,8 +27,8 @@ const TaskContainerComponent = ({ selectedTag }: Props) => {
   };
 
   useEffect(() => {
-    setTaskState(todos);
-  }, [todos]);
+    setTaskState(tasks);
+  }, [tasks]);
 
   return (
     <div className={"w-2/3"}>

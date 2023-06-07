@@ -1,4 +1,5 @@
 export enum CollectionNameEnum {
-    users = 'users',
-    todos = 'todos'
+  users = "users",
+  todos = "todos",
+  taskColumn = "tasksColumns",
 }
