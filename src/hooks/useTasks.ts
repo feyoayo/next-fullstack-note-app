@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { CreateTaskInterface } from "@/types/todo";
+import { CreateTaskInterface } from "@/types/task";
 import { TodoService } from "@/services/todo.service";
 import { toast } from "react-toastify";
 

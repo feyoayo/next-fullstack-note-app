@@ -1,5 +1,5 @@
 export enum CollectionNameEnum {
   users = "users",
-  todos = "todos",
+  tasks = "tasks",
   taskColumn = "tasksColumns",
 }

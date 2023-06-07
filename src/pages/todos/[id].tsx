@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { DbConnectionService } from "@/backend/services/db-connection.service";
 import { GetServerSideProps } from "next";
 import { TodoModel } from "@/backend/models/todo.model";
-import { TaskModelInterface } from "@/types/todo";
+import { TaskModelInterface } from "@/types/task";
 
 interface Props {
   task: TaskModelInterface;

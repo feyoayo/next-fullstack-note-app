@@ -2,7 +2,6 @@ import { Schema } from "mongoose";
 
 export interface CreateTaskInterface {
   title: string;
-  when?: Date;
   tags: string[];
 }
 
@@ -15,4 +14,8 @@ export interface TaskModelInterface extends CreateTaskInterface {
   updatedAt?: number;
   column?: string;
   _id?: string;
+  priority: Priority;
+  estimate: number;
 }
+
+export type Priority = "Low" | "Medium" | "High";

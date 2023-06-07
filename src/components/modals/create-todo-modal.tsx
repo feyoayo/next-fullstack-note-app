@@ -4,7 +4,7 @@ import InputField from "@/components/ui/InputField/Input-field.component";
 import { OutlineButton } from "@/components/ui/buttons";
 import { useState } from "react";
 import { ChipComponent, InputComponent, Label } from "@/components/ui";
-import { CreateTaskInterface } from "@/types/todo";
+import { CreateTaskInterface } from "@/types/task";
 import useTasks from "@/hooks/useTasks";
 
 interface TodoModalProps {
@@ -69,19 +69,16 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
                 type={"text"}
                 required
                 register={register}
-                label={"What do you want to do ?"}
+                label={"Task name"}
                 errors={errors}
                 validationSchema={{
                   required: true,
                 }}
               />
+              <div>
+                <Label htmlFor={""} label={"Priority"} />
+              </div>
 
-              <InputField
-                name={"when"}
-                type={"date"}
-                register={register}
-                label={"When ?"}
-              />
               <div>
                 <Label htmlFor={"tag"} label={"Tags"} />
               </div>

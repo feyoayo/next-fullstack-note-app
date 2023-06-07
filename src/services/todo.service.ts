@@ -1,5 +1,5 @@
 import Axios from "@/config/axios-config";
-import { CreateTaskInterface, TaskModelInterface } from "@/types/todo";
+import { CreateTaskInterface, TaskModelInterface } from "@/types/task";
 
 export class TodoService {
   static async createTask(body: CreateTaskInterface) {

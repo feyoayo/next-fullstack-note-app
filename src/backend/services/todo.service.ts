@@ -1,6 +1,6 @@
 import { DbConnectionService } from "@/backend/services/db-connection.service";
 import { TodoModel } from "@/backend/models/todo.model";
-import { CreateTaskPayloadInterface, TaskModelInterface } from "@/types/todo";
+import { CreateTaskPayloadInterface, TaskModelInterface } from "@/types/task";
 
 export class TodoService {
   dbService: DbConnectionService;

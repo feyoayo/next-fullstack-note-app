@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useRouter } from "next/router";
 import { useDrag, useDrop } from "react-dnd";
 import classNames from "classnames";
-import { TaskModelInterface } from "@/types/todo";
+import { TaskModelInterface } from "@/types/task";
 
 interface Props {
   el: TaskModelInterface;
@@ -71,7 +71,7 @@ const TaskListItemComponent = ({ moveItem, el, index }: Props) => {
       ref={ref}
       onClick={() => router.push(`todos/${el._id}`)}
       className={classNames(
-        "flex gap-2 cursor-pointer w-full px-4 py-2 border-b border-t border-gray-200 rounded-t-lg dark:border-gray-600",
+        "flex hover:bg-gray-300 gap-2 cursor-pointer w-full px-4 py-2 border-b border-t border-gray-200 rounded-lg dark:border-gray-600",
         {
           ["opacity-40"]: isDragging,
           ["text-opacity-100"]: !isDragging,

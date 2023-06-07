@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { BaseController } from "@/backend/common/base-controller";
 import { TodoService } from "@/backend/services/todo.service";
-import { CreateTaskInterface } from "@/types/todo";
+import { CreateTaskInterface } from "@/types/task";
 
 export class TodoController extends BaseController {
   todoService: TodoService;
