@@ -71,7 +71,6 @@ const TaskListItemComponent = ({ moveItem, el, index, isOver }: Props) => {
       item.index = hoverIndex;
     },
   });
-  console.log(el);
 
   drag(drop(ref));
   return (

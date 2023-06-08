@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import useTasks, { queryKeys } from "@/hooks/useTasks";
+import { queryKeys } from "@/hooks/useTasks";
 import update from "immutability-helper";
 import TaskListItemComponent from "@/components/task-page/tasks-container/task-list-item.component";
 import { TaskModelInterface } from "@/types/task";
 import { DropTargetMonitor, useDrop } from "react-dnd";
 import { DRAG_TYPE } from "@/utils/constants";
-import { log } from "console";
 import { useMutation, useQueryClient } from "react-query";
 import { TaskService } from "@/services/task.service";
 import classNames from "classnames";
@@ -34,7 +33,6 @@ const TaskContainerComponent = ({ tasks, title }: Props) => {
       }
     },
   });
-  console.log(isOver, title);
 
   const moveItem = (dragIndex: number, hoverIndex: number) => {
     const dragTask = taskState[dragIndex];
