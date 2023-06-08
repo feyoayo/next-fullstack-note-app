@@ -1,21 +1,16 @@
 import React from "react";
 import Link from "next/link";
-import {
-  ABOUT_PAGE,
-  CONTACT_PAGE,
-  HOME_PAGE,
-  LOGIN_PAGE,
-  REGISTRATION_PAGE,
-} from "@/utils/constants/routes";
+
 import DarkModeSwitcher from "@/components/ui/dark-mode-switcher";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
+import { ROUTES } from "@/utils/constants/routes";
 
 const HeaderComponent = () => {
   const router = useRouter();
 
-  const isRegistrationPage = router.pathname === REGISTRATION_PAGE;
-  const isLoginPage = router.pathname === LOGIN_PAGE;
+  const isRegistrationPage = router.pathname === ROUTES.REGISTRATION_PAGE;
+  const isLoginPage = router.pathname === ROUTES.LOGIN_PAGE;
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -23,7 +18,7 @@ const HeaderComponent = () => {
           <img
             src="https://flowbite.com/docs/images/logo.svg"
             className="h-8 mr-3"
-            alt="Flowbite Logo"
+            alt="Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Flowbite
@@ -55,7 +50,7 @@ const HeaderComponent = () => {
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <Link
-                href={HOME_PAGE}
+                href={ROUTES.HOME_PAGE}
                 className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                 aria-current="page"
               >
@@ -64,7 +59,7 @@ const HeaderComponent = () => {
             </li>
             <li>
               <Link
-                href={ABOUT_PAGE}
+                href={ROUTES.ABOUT_PAGE}
                 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 About
@@ -72,7 +67,7 @@ const HeaderComponent = () => {
             </li>
             <li>
               <Link
-                href={CONTACT_PAGE}
+                href={ROUTES.CONTACT_PAGE}
                 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 Contact
@@ -81,7 +76,7 @@ const HeaderComponent = () => {
             {isLoginPage ? (
               <li>
                 <Link
-                  href={REGISTRATION_PAGE}
+                  href={ROUTES.REGISTRATION_PAGE}
                   className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   Sign Up
@@ -90,7 +85,7 @@ const HeaderComponent = () => {
             ) : isRegistrationPage ? (
               <li>
                 <Link
-                  href={LOGIN_PAGE}
+                  href={ROUTES.LOGIN_PAGE}
                   className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   Sign In
@@ -99,7 +94,7 @@ const HeaderComponent = () => {
             ) : (
               <li>
                 <span
-                  onClick={() => signOut({ callbackUrl: LOGIN_PAGE })}
+                  onClick={() => signOut({ callbackUrl: ROUTES.LOGIN_PAGE })}
                   className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   Sign Out

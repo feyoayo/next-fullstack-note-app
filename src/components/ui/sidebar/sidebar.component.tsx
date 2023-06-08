@@ -1,22 +1,22 @@
-import { HOME_PAGE, NOTE_PAGE, TODO_PAGE } from "@/utils/constants/routes";
 import Link from "next/link";
+import { ROUTES } from "@/utils/constants/routes";
 
 const SidebarComponent = () => {
   const sidebarItems = [
     {
       id: 1,
       title: "Dashboard",
-      linkTo: HOME_PAGE,
+      linkTo: ROUTES.HOME_PAGE,
     },
     {
       id: 2,
       title: "ToDo",
-      linkTo: TODO_PAGE,
+      linkTo: ROUTES.TASKS_PAGE,
     },
     {
       id: 3,
       title: "Notes",
-      linkTo: NOTE_PAGE,
+      linkTo: ROUTES.NOTE_PAGE,
     },
   ];
 

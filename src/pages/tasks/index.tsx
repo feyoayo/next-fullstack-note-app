@@ -16,6 +16,7 @@ import { NextAuthSecret } from "@/pages/api/auth/[...nextauth]";
 import { ObjectId } from "bson";
 import useTasks from "@/hooks/useTasks";
 import classNames from "classnames";
+import { ROUTES } from "@/utils/constants/routes";
 
 interface Props {
   tags: string[];
@@ -38,7 +39,7 @@ const TodosPage = ({ tags, columns }: Props) => {
 
   useEffect(() => {
     router.push({
-      pathname: "/todos",
+      pathname: ROUTES.TASKS_PAGE,
       query: {
         tag: selectedTag,
       },

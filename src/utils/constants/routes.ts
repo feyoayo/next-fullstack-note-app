@@ -1,9 +1,10 @@
-export const HOME_PAGE = "/";
-export const LOGIN_PAGE = "/auth/login";
-export const REGISTRATION_PAGE = "/auth/registration";
-export const ABOUT_PAGE = "/about";
-export const CONTACT_PAGE = "/contact";
-
-export const TODO_PAGE = "/todos";
-
-export const NOTE_PAGE = "/notes";
+export const ROUTES = {
+  HOME_PAGE: "/",
+  LOGIN_PAGE: "/auth/login",
+  REGISTRATION_PAGE: "/auth/registration",
+  ABOUT_PAGE: "/about",
+  CONTACT_PAGE: "/contact",
+  TASKS_PAGE: "/tasks",
+  TASK_PAGE: (id: string) => `/tasks/${id}`,
+  NOTE_PAGE: "/notes",
+};

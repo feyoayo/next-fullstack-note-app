@@ -9,6 +9,7 @@ import high from "../../../../public/svg/high.svg";
 import medium from "../../../../public/svg/medium.svg";
 import low from "../../../../public/svg/low.svg";
 import dragIcon from "../../../../public/svg/drag.svg";
+import { ROUTES } from "@/utils/constants/routes";
 
 interface Props {
   el: TaskModelInterface;
@@ -76,7 +77,7 @@ const TaskListItemComponent = ({ moveItem, el, index, isOver }: Props) => {
   return (
     <div
       ref={ref}
-      onClick={() => router.push(`todos/${el._id}`)}
+      onClick={() => router.push(ROUTES.TASK_PAGE(el._id!))}
       className={classNames(
         "flex transition-all duration-150 items-center animate-transition box-border hover:bg-gray-300 gap-2 cursor-move w-full px-4 py-2 border border-gray-200 rounded-lg dark:border-gray-600 hover:dark:text-slate-900 delay-[50ms]",
         {
