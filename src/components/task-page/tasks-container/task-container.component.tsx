@@ -56,7 +56,7 @@ const TaskContainerComponent = ({ tasks, title }: Props) => {
 
   return (
     <div ref={drop} className={"w-3/4 mb-2 "}>
-      <h5 className={"mb-2 text-slate-500"}>{title}</h5>
+      <h5 className={"mb-2 text-slate-500 dark:text-slate-200"}>{title}</h5>
       <ul
         className={classNames(
           "min-h-[100px] transition-opacity   flex flex-col gap-2 text-sm p-2 box-border font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white",

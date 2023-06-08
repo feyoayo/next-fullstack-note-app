@@ -1,9 +1,14 @@
 import React, { useRef } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { useDrag, useDrop } from "react-dnd";
 import classNames from "classnames";
 import { TaskModelInterface } from "@/types/task";
 import { DRAG_TYPE } from "@/utils/constants";
+import high from "../../../../public/svg/high.svg";
+import medium from "../../../../public/svg/medium.svg";
+import low from "../../../../public/svg/low.svg";
+import dragIcon from "../../../../public/svg/drag.svg";
 
 interface Props {
   el: TaskModelInterface;
@@ -14,7 +19,7 @@ interface Props {
 const TaskListItemComponent = ({ moveItem, el, index, isOver }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const [{ isDragging }, drag, preview] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: DRAG_TYPE,
     item: { type: DRAG_TYPE, index, ...el },
     collect: (monitor) => ({
@@ -65,6 +70,7 @@ const TaskListItemComponent = ({ moveItem, el, index, isOver }: Props) => {
       item.index = hoverIndex;
     },
   });
+  console.log(el);
 
   drag(drop(ref));
   return (
@@ -72,7 +78,7 @@ const TaskListItemComponent = ({ moveItem, el, index, isOver }: Props) => {
       ref={ref}
       onClick={() => router.push(`todos/${el._id}`)}
       className={classNames(
-        "flex animate-transition box-border hover:bg-gray-300 gap-2 cursor-pointer w-full px-4 py-2 border border-gray-200 rounded-lg dark:border-gray-600 hover:dark:text-slate-900 delay-[50ms]",
+        "flex transition-all duration-150 items-center animate-transition box-border hover:bg-gray-300 gap-2 cursor-move w-full px-4 py-2 border border-gray-200 rounded-lg dark:border-gray-600 hover:dark:text-slate-900 delay-[50ms]",
         {
           ["opacity-40"]: isDragging,
           ["text-opacity-100"]: !isDragging,
@@ -80,7 +86,29 @@ const TaskListItemComponent = ({ moveItem, el, index, isOver }: Props) => {
         }
       )}
     >
-      {el.title}
+      <div>
+        <Image width={13} src={dragIcon} alt={"Drag icon"} />
+      </div>
+      <div title={`Priority: ${el.priority}`}>
+        {el.priority === "High" && (
+          <Image width={13} src={high} alt={el.priority} />
+        )}
+        {el.priority === "Medium" && (
+          <Image width={13} src={medium} alt={el.priority} />
+        )}
+        {el.priority === "Low" && (
+          <Image width={13} src={low} alt={el.priority} />
+        )}
+      </div>
+      <div
+        title={`Estimate: ${el.estimate}`}
+        className={
+          "flex items-center justify-center border p-1 rounded-md border-gray-400 bg-slate-300 dark:text-slate-800 text-[8px] h-3"
+        }
+      >
+        {el.estimate}
+      </div>
+      <div>{el.title}</div>
     </div>
   );
 };
