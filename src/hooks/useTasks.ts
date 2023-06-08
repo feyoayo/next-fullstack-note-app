@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { CreateTaskInterface } from "@/types/task";
-import { TodoService } from "@/services/todo.service";
+import { TaskService } from "@/services/task.service";
 import { toast } from "react-toastify";
 
 export const queryKeys = {
@@ -12,14 +12,14 @@ export default function useTasks({ tag }: { tag?: string }) {
   const { data: response, isLoading: isTaskListLoading } = useQuery(
     [queryKeys.taskData, tag],
     {
-      queryFn: () => TodoService.getTaskList(tag),
+      queryFn: () => TaskService.getTaskList(tag),
       onError: (err) => {
         toast.error("Task list getting error");
       },
     }
   );
   const { mutateAsync, isLoading: isCreationLoading } = useMutation(
-    (data: CreateTaskInterface) => TodoService.createTask(data),
+    (data: CreateTaskInterface) => TaskService.createTask(data),
     {
       onSuccess: () => {
         toast.success("Task created successfully");

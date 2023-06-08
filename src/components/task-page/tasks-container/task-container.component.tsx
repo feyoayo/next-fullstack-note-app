@@ -7,7 +7,7 @@ import { DropTargetMonitor, useDrop } from "react-dnd";
 import { DRAG_TYPE } from "@/utils/constants";
 import { log } from "console";
 import { useMutation, useQueryClient } from "react-query";
-import { TodoService } from "@/services/todo.service";
+import { TaskService } from "@/services/task.service";
 import classNames from "classnames";
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 const TaskContainerComponent = ({ tasks, title }: Props) => {
   const [taskState, setTaskState] = useState(tasks);
   const { mutateAsync } = useMutation((data: { column: string; id: string }) =>
-    TodoService.updateTaskColumn(data)
+    TaskService.updateTaskColumn(data)
   );
   const queryClient = useQueryClient();
   const [{ isOver }, drop] = useDrop({
