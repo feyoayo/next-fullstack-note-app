@@ -14,6 +14,8 @@ import { TaskColumnsModel } from "@/backend/models/task-columns.model";
 import { getToken } from "next-auth/jwt";
 import { NextAuthSecret } from "@/pages/api/auth/[...nextauth]";
 import { ObjectId } from "bson";
+import useTasks from "@/hooks/useTasks";
+import classNames from "classnames";
 
 interface Props {
   tags: string[];
@@ -23,7 +25,9 @@ const TodosPage = ({ tags, columns }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const [selectedTag, setSelectedTag] = useState("");
-
+  const { tasks } = useTasks({
+    tag: selectedTag,
+  });
   const selectTagsHandler = (tag: string) => {
     if (tag === selectedTag) {
       setSelectedTag("");
@@ -43,7 +47,11 @@ const TodosPage = ({ tags, columns }: Props) => {
   return (
     <div>
       <DndProvider backend={HTML5Backend}>
-        <div className={"flex items-center gap-3 mb-3"}>
+        <div
+          className={classNames("flex items-center gap-3 mb-3", {
+            ["hidden"]: !tags?.length,
+          })}
+        >
           <div>
             <p>Sort by tags:</p>
           </div>
@@ -64,8 +72,14 @@ const TodosPage = ({ tags, columns }: Props) => {
           {showModal && <CreateTodoModal onClose={() => setShowModal(false)} />}
         </div>
 
-        <div className={"flex w-full"}>
-          <TaskContainerComponent selectedTag={selectedTag} />
+        <div className={"w-full"}>
+          {columns.map((column, index) => (
+            <TaskContainerComponent
+              key={index}
+              tasks={tasks.filter((el) => el.column === column)}
+              title={column}
+            />
+          ))}
         </div>
       </DndProvider>
     </div>

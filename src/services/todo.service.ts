@@ -11,4 +11,7 @@ export class TodoService {
     });
     return data.data;
   }
+  static async updateTaskColumn(data: { column: string; id: string }) {
+    return Axios.patch("/tasks/update_column", data);
+  }
 }

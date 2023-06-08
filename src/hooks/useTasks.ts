@@ -3,7 +3,7 @@ import { CreateTaskInterface } from "@/types/task";
 import { TodoService } from "@/services/todo.service";
 import { toast } from "react-toastify";
 
-const queryKeys = {
+export const queryKeys = {
   taskData: "taskData",
 };
 

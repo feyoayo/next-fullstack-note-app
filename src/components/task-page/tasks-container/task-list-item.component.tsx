@@ -3,19 +3,20 @@ import { useRouter } from "next/router";
 import { useDrag, useDrop } from "react-dnd";
 import classNames from "classnames";
 import { TaskModelInterface } from "@/types/task";
+import { DRAG_TYPE } from "@/utils/constants";
 
 interface Props {
   el: TaskModelInterface;
   index: number;
   moveItem: any;
+  isOver?: boolean;
 }
-const TaskListItemComponent = ({ moveItem, el, index }: Props) => {
+const TaskListItemComponent = ({ moveItem, el, index, isOver }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
-  const DRAG_TYPE = "item";
   const router = useRouter();
   const [{ isDragging }, drag, preview] = useDrag({
     type: DRAG_TYPE,
-    item: { type: DRAG_TYPE, index },
+    item: { type: DRAG_TYPE, index, ...el },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -71,10 +72,11 @@ const TaskListItemComponent = ({ moveItem, el, index }: Props) => {
       ref={ref}
       onClick={() => router.push(`todos/${el._id}`)}
       className={classNames(
-        "flex hover:bg-gray-300 gap-2 cursor-pointer w-full px-4 py-2 border-b border-t border-gray-200 rounded-lg dark:border-gray-600",
+        "flex animate-transition box-border hover:bg-gray-300 gap-2 cursor-pointer w-full px-4 py-2 border border-gray-200 rounded-lg dark:border-gray-600 hover:dark:text-slate-900 delay-[50ms]",
         {
           ["opacity-40"]: isDragging,
           ["text-opacity-100"]: !isDragging,
+          ["border-slate-900"]: isOver,
         }
       )}
     >
