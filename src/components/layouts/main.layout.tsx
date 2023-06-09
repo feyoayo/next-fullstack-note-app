@@ -1,12 +1,11 @@
-import React from "react";
-import { LayoutProps } from "@/types/util";
 import HeaderComponent from "@/components/ui/headers/header.component";
 import SidebarComponent from "@/components/ui/sidebar/sidebar.component";
+import { LayoutProps } from "@/types/util";
+
 const MainLayout = ({ children }: LayoutProps) => {
   return (
-    <div className={""}>
+    <div className={"h-screen"}>
       <HeaderComponent />
-
       <div className={"flex"}>
         <SidebarComponent />
 

@@ -18,6 +18,7 @@ import useTasks from "@/hooks/useTasks";
 import classNames from "classnames";
 import { ROUTES } from "@/utils/constants/routes";
 import TaskSidebarComponent from "@/components/task-page/task-sidebar/task-sidebar.component";
+import useTaskSidebar from "@/stores/task-sidebar";
 
 interface Props {
   tags: string[];
@@ -30,6 +31,8 @@ const TodosPage = ({ tags, columns }: Props) => {
   const { tasks } = useTasks({
     tag: selectedTag,
   });
+  const { isOpened: isSidebarOpened } = useTaskSidebar();
+
   const selectTagsHandler = (tag: string) => {
     if (tag === selectedTag) {
       setSelectedTag("");
@@ -75,7 +78,12 @@ const TodosPage = ({ tags, columns }: Props) => {
         </div>
 
         <div className={"flex w-full"}>
-          <div className={"w-full lg:w-2/3"}>
+          <div
+            className={classNames("transition-all", {
+              ["w-full"]: !isSidebarOpened,
+              ["hidden md:block md:w-2/3"]: isSidebarOpened,
+            })}
+          >
             {columns.map((column, index) => (
               <TaskContainerComponent
                 key={index}
@@ -84,8 +92,12 @@ const TodosPage = ({ tags, columns }: Props) => {
               />
             ))}
           </div>
-
-          <div className={"w-1/3"}>
+          <div
+            className={classNames("transition-all", {
+              ["hidden w-0"]: !isSidebarOpened,
+              ["w-full md:w-1/3"]: isSidebarOpened,
+            })}
+          >
             <TaskSidebarComponent columns={columns} />
           </div>
         </div>

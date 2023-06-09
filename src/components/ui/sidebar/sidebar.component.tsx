@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { ROUTES } from "@/utils/constants/routes";
 import useSidebarStore from "@/stores/sidebar";
+import { ROUTES } from "@/utils/constants/routes";
 import classNames from "classnames";
+import Link from "next/link";
 
 const sidebarItems = [
   {
@@ -22,7 +22,7 @@ const SidebarComponent = () => {
     <aside
       id="default-sidebar"
       className={classNames(
-        "fixed lg:static top-[70px] left-0 z-40 w-full md:w-64  h-full box-border transition-transform -translate-x-full translate-x-0",
+        "fixed lg:static top-[70px] left-0 z-40 w-ful h-full md:w-64  box-border transition-transform -translate-x-full translate-x-0",
         {
           ["hidden"]: !isOpened,
         }

@@ -8,13 +8,9 @@ interface Props {
   columns: string[];
 }
 const TaskSidebarComponent = ({ columns }: Props) => {
-  const { isOpened, selectedTask, closeSidebar } = useTaskSidebar();
+  const { selectedTask, closeSidebar } = useTaskSidebar();
   return (
-    <div
-      className={classNames("flex flex-col p-5", {
-        ["hidden"]: !isOpened,
-      })}
-    >
+    <div className={classNames("flex flex-col p-5 ")}>
       <div className={"flex justify-end w-full"}>
         <CloseButtonComponent onClick={closeSidebar} />
       </div>
