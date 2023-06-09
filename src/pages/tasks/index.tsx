@@ -79,10 +79,13 @@ const TodosPage = ({ tags, columns }: Props) => {
 
         <div className={"flex w-full"}>
           <div
-            className={classNames("transition-all", {
-              ["w-full"]: !isSidebarOpened,
-              ["hidden md:block md:w-2/3"]: isSidebarOpened,
-            })}
+            className={classNames(
+              "transition-all max-h-[80vh] overflow-y-scroll",
+              {
+                ["w-full"]: !isSidebarOpened,
+                ["hidden md:block md:w-2/3"]: isSidebarOpened,
+              }
+            )}
           >
             {columns.map((column, index) => (
               <TaskContainerComponent

@@ -17,7 +17,7 @@ const HeaderComponent = () => {
   const { toggleSidebar } = useSidebarStore();
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="bg-white h-[80px] border-gray-200 dark:bg-gray-900">
       <div className="flex flex-wrap items-center justify-between mx-auto p-4">
         <div className={"flex items-center gap-2"}>
           <BurgerButtonComponent onClick={toggleSidebar} />
