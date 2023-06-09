@@ -4,8 +4,8 @@ import useRegistration from "@/hooks/auth/useRegistration";
 import { UserInterface } from "@/types/auth";
 
 import { useForm } from "react-hook-form";
-import {NextPageWithLayout} from "@/types/util";
-import {ReactElement} from "react";
+import { NextPageWithLayout } from "@/types/util";
+import { ReactElement } from "react";
 import AuthLayout from "@/components/layouts/auth.layout";
 
 interface RegistrationField {
@@ -24,20 +24,20 @@ const RegistrationPage: NextPageWithLayout = () => {
     watch,
   } = useForm<RegistrationField>();
   const { isLoading, registerUser } = useRegistration();
-  const onSubmit = async (data: Omit<UserInterface, 'accountType'>) => {
+  const onSubmit = async (data: Omit<UserInterface, "accountType">) => {
     const { email, firstName, lastName, password } = data;
     const payload: UserInterface = {
       email,
       firstName,
       lastName,
-      password, accountType: 'credential'
+      password,
+      accountType: "credential",
     };
     await registerUser(payload);
   };
 
   return (
     <div>
-      <h2 className={"text-3xl"}>Registration</h2>
       <div>
         <form
           className={"flex justify-center"}
@@ -127,11 +127,7 @@ const RegistrationPage: NextPageWithLayout = () => {
 };
 
 RegistrationPage.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <AuthLayout>
-            {page}
-        </AuthLayout>
-    )
-}
+  return <AuthLayout>{page}</AuthLayout>;
+};
 
 export default RegistrationPage;

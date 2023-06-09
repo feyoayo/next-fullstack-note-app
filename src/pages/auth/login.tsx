@@ -28,7 +28,7 @@ const LoginPage: NextPageWithLayout = () => {
   const onSubmit = async (data: UserAuthInterface) => {
     // mutateAsync(data).then(r => localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, r.data.token))
     await signIn("credentials", {
-      callbackUrl: ROUTES.HOME_PAGE,
+      callbackUrl: ROUTES.TASKS_PAGE,
       email: data.email,
       password: data.password,
     });

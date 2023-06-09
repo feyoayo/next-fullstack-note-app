@@ -34,7 +34,7 @@ export default NextAuth({
 
           await dbConnect.connectToDb();
 
-          const user = await service.findUser(credentials.email);
+          const user = await service.findUser(credentials.email, "credential");
 
           if (!user) {
             throw new Error("User not found");

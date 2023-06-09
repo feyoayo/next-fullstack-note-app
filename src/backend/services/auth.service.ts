@@ -11,12 +11,15 @@ export class AuthenticateService {
     this.encryptPassword = new EncryptPassword();
   }
 
-  public async findUser(email: string, accountType?: AccountTypes) {
+  public async findUser(email: string, accountType: AccountTypes) {
     return UserModel.findOne({ email, accountType });
   }
 
-  public async createUser(userData: UserInterface): Promise<UserInterface> {
-    const isUserExist = await this.findUser(userData.email);
+  public async createUser(
+    userData: UserInterface,
+    type: AccountTypes = "credential"
+  ): Promise<UserInterface> {
+    const isUserExist = await this.findUser(userData.email, type);
     if (isUserExist) {
       throw new Error("User already exist");
     }
@@ -27,7 +30,6 @@ export class AuthenticateService {
     userData.role = "USER";
     const user = await new UserModel(userData).save();
     await new TaskColumnsModel({ userId: user._id }).save();
-    console.log(user);
     return user;
   }
   public async createGoogleUser(profile: any) {
@@ -40,12 +42,12 @@ export class AuthenticateService {
         accountType: "google",
         password: "",
       };
-      await this.createUser(payload);
+      await this.createUser(payload, "google");
     }
   }
 
   public async authUser(userData: UserAuthInterface): Promise<any> {
-    const authCandidate = await this.findUser(userData.email);
+    const authCandidate = await this.findUser(userData.email, "credential");
     if (!authCandidate) {
       throw new Error("User not exist");
     }
