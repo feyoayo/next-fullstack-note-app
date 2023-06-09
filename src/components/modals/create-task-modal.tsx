@@ -4,13 +4,15 @@ import InputField from "@/components/ui/InputField/Input-field.component";
 import { OutlineButton } from "@/components/ui/buttons";
 import { useState } from "react";
 import { ChipComponent, InputComponent, Label } from "@/components/ui";
-import { CreateTaskInterface } from "@/types/task";
+import { TaskModelInterface } from "@/types/task";
 import useTasks from "@/hooks/useTasks";
+import SelectComponent from "@/components/ui/input/select.component";
 
 interface TodoModalProps {
   onClose: () => void;
 }
-const CreateTodoModal = ({ onClose }: TodoModalProps) => {
+interface Form extends TaskModelInterface {}
+const CreateTaskModal = ({ onClose }: TodoModalProps) => {
   const {
     watch,
     register,
@@ -18,9 +20,11 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
     setValue,
     handleSubmit,
     reset,
-  } = useForm<CreateTaskInterface>({
+  } = useForm<Form>({
     defaultValues: {
       tags: [],
+      priority: "Medium",
+      estimate: 0,
     },
   });
   const [tagValue, setTagValue] = useState("");
@@ -36,7 +40,7 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
     setValue("tags", newTags);
   };
 
-  const onSubmit = async (data: CreateTaskInterface) => {
+  const onSubmit = async (data: Form) => {
     await createTask(data);
     reset();
   };
@@ -60,7 +64,7 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
           </button>
           <div className="px-6 py-6 lg:px-8">
             <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-              {"Create todo"}
+              {"Create task"}
             </h3>
 
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -76,7 +80,31 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
                 }}
               />
               <div>
-                <Label htmlFor={""} label={"Priority"} />
+                <Label htmlFor={"priority"} label={"Priority"} />
+
+                <SelectComponent
+                  register={register}
+                  name={"priority"}
+                  validationSchema={{ required: true }}
+                >
+                  <option value={"Low"}>Low</option>
+                  <option value={"Medium"}>Medium</option>
+                  <option value={"High"}>High</option>
+                </SelectComponent>
+              </div>
+
+              <div>
+                <Label
+                  htmlFor={"estimate"}
+                  label={"Estimate"}
+                  {...register("estimate")}
+                />
+                <InputField
+                  name={"estimate"}
+                  type={"number"}
+                  register={register}
+                  min={0}
+                />
               </div>
 
               <div>
@@ -119,4 +147,4 @@ const CreateTodoModal = ({ onClose }: TodoModalProps) => {
   );
 };
 
-export default CreateTodoModal;
+export default CreateTaskModal;

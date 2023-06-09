@@ -11,6 +11,8 @@ interface InputFieldInterface {
   validationSchema?: RegisterOptions;
   required?: boolean;
   errors?: FieldErrors;
+  min?: number;
+  max?: number;
 }
 const InputField = ({
   label,

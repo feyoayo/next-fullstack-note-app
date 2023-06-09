@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { OutlineButton } from "@/components/ui/buttons";
-import CreateTodoModal from "@/components/modals/create-todo-modal";
+import CreateTaskModal from "@/components/modals/create-task-modal";
 import MainLayout from "@/components/layouts/main.layout";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
@@ -70,7 +70,7 @@ const TodosPage = ({ tags, columns }: Props) => {
           <OutlineButton onClick={() => setShowModal(true)}>
             {"Create task"}
           </OutlineButton>
-          {showModal && <CreateTodoModal onClose={() => setShowModal(false)} />}
+          {showModal && <CreateTaskModal onClose={() => setShowModal(false)} />}
         </div>
 
         <div className={"w-full"}>

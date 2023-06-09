@@ -10,13 +10,8 @@ const SidebarComponent = () => {
     },
     {
       id: 2,
-      title: "ToDo",
+      title: "Task list",
       linkTo: ROUTES.TASKS_PAGE,
-    },
-    {
-      id: 3,
-      title: "Notes",
-      linkTo: ROUTES.NOTE_PAGE,
     },
   ];
 
