@@ -49,9 +49,12 @@ const CreateTaskModal = ({ onClose }: TodoModalProps) => {
       id="create_modal"
       tabIndex={-1}
       aria-hidden="true"
-      className="fixed flex justify-center items-center  top-1/2 left-1/2 right-1/2 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      className="fixed flex justify-center items-center  top-1/2 left-1/2 right-1/2 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  max-h-full animate-transition"
     >
-      <div className={"absolute opacity-70 bg-black h-full w-full"} />
+      <div
+        className={"absolute opacity-70 bg-black h-full w-full"}
+        onClick={onClose}
+      />
       <div className="relative -mt-10 w-full max-w-md max-h-full">
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
           <button
