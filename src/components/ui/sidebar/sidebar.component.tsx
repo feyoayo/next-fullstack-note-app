@@ -1,24 +1,32 @@
 import Link from "next/link";
 import { ROUTES } from "@/utils/constants/routes";
+import useSidebarStore from "@/stores/sidebar";
+import classNames from "classnames";
 
+const sidebarItems = [
+  {
+    id: 1,
+    title: "Dashboard",
+    linkTo: ROUTES.HOME_PAGE,
+  },
+  {
+    id: 2,
+    title: "Task list",
+    linkTo: ROUTES.TASKS_PAGE,
+  },
+];
 const SidebarComponent = () => {
-  const sidebarItems = [
-    {
-      id: 1,
-      title: "Dashboard",
-      linkTo: ROUTES.HOME_PAGE,
-    },
-    {
-      id: 2,
-      title: "Task list",
-      linkTo: ROUTES.TASKS_PAGE,
-    },
-  ];
+  const { isOpened } = useSidebarStore();
 
   return (
     <aside
       id="default-sidebar"
-      className="block top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      className={classNames(
+        "fixed lg:static top-[70px] left-0 z-40 w-full md:w-64  h-full box-border transition-transform -translate-x-full translate-x-0",
+        {
+          ["hidden"]: !isOpened,
+        }
+      )}
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">

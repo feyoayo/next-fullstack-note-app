@@ -12,7 +12,7 @@ const Modal = ({ onClose, title = "", children }: Props) => {
       id={title.toLowerCase()}
       tabIndex={-1}
       aria-hidden="true"
-      className="fixed flex justify-center items-center  top-1/2 left-1/2 right-1/2 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  max-h-full animate-transition"
+      className="fixed top-1/2 left-1/2 right-1/2 z-50 flex justify-center items-center    w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0  max-h-full animate-transition"
     >
       <div
         className={"absolute opacity-70 bg-black h-full w-full"}

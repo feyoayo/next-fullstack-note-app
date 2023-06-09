@@ -10,7 +10,9 @@ const MainLayout = ({ children }: LayoutProps) => {
       <div className={"flex"}>
         <SidebarComponent />
 
-        <section className={"w-full pt-6 px-5 box-border"}>{children}</section>
+        <section className={"w-full pt-6 px-2 md:px-5 box-border"}>
+          {children}
+        </section>
       </div>
     </div>
   );

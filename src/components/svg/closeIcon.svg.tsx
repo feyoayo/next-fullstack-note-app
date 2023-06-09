@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Props {
-  onClick: () => void;
+  onClick?: () => void;
 }
 const CloseIconSvg = ({ onClick }: Props) => {
   return (

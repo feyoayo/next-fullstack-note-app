@@ -1,12 +1,12 @@
-import { useForm } from "react-hook-form";
+import { ChipComponent, InputComponent, Label } from "@/components/ui";
 import InputField from "@/components/ui/InputField/Input-field.component";
 import { OutlineButton } from "@/components/ui/buttons";
-import { useState } from "react";
-import { ChipComponent, InputComponent, Label } from "@/components/ui";
-import { TaskModelInterface } from "@/types/task";
-import useTasks from "@/hooks/useTasks";
 import SelectComponent from "@/components/ui/input/select.component";
 import Modal from "@/components/ui/modal";
+import useTasks from "@/hooks/useTasks";
+import { TaskModelInterface } from "@/types/task";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const MODAL_TITLE = "Create task";
 

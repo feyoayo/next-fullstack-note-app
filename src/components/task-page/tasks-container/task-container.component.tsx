@@ -53,7 +53,7 @@ const TaskContainerComponent = ({ tasks, title }: Props) => {
   }, [tasks]);
 
   return (
-    <div ref={drop} className={"w-3/4 mb-2 "}>
+    <div ref={drop} className={"w-full mb-2 "}>
       <h5 className={"mb-2 text-slate-500 dark:text-slate-200"}>{title}</h5>
       <ul
         className={classNames(

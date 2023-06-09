@@ -17,6 +17,7 @@ import { ObjectId } from "bson";
 import useTasks from "@/hooks/useTasks";
 import classNames from "classnames";
 import { ROUTES } from "@/utils/constants/routes";
+import TaskSidebarComponent from "@/components/task-page/task-sidebar/task-sidebar.component";
 
 interface Props {
   tags: string[];
@@ -73,14 +74,20 @@ const TodosPage = ({ tags, columns }: Props) => {
           {showModal && <CreateTaskModal onClose={() => setShowModal(false)} />}
         </div>
 
-        <div className={"w-full"}>
-          {columns.map((column, index) => (
-            <TaskContainerComponent
-              key={index}
-              tasks={tasks.filter((el) => el.column === column)}
-              title={column}
-            />
-          ))}
+        <div className={"flex w-full"}>
+          <div className={"w-full lg:w-2/3"}>
+            {columns.map((column, index) => (
+              <TaskContainerComponent
+                key={index}
+                tasks={tasks.filter((el) => el.column === column)}
+                title={column}
+              />
+            ))}
+          </div>
+
+          <div className={"w-1/3"}>
+            <TaskSidebarComponent columns={columns} />
+          </div>
         </div>
       </DndProvider>
     </div>

@@ -10,6 +10,7 @@ import medium from "../../../../public/svg/medium.svg";
 import low from "../../../../public/svg/low.svg";
 import dragIcon from "../../../../public/svg/drag.svg";
 import { ROUTES } from "@/utils/constants/routes";
+import useTaskSidebar from "@/stores/task-sidebar";
 
 interface Props {
   el: TaskModelInterface;
@@ -73,10 +74,17 @@ const TaskListItemComponent = ({ moveItem, el, index, isOver }: Props) => {
   });
 
   drag(drop(ref));
+
+  const { selectTask } = useTaskSidebar();
+  const onItemClick = () => {
+    // router.push(ROUTES.TASK_PAGE(el._id!));
+    selectTask(el);
+  };
+
   return (
     <div
       ref={ref}
-      onClick={() => router.push(ROUTES.TASK_PAGE(el._id!))}
+      onClick={onItemClick}
       className={classNames(
         "flex transition-all duration-150 items-center animate-transition box-border hover:bg-gray-300 gap-2 cursor-move w-full px-4 py-2 border border-gray-200 rounded-lg dark:border-gray-600 hover:dark:text-slate-900 delay-[50ms]",
         {
